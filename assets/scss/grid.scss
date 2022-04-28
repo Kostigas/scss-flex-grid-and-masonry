@@ -1,0 +1,107 @@
+@use 'sass:math';
+
+$breakpoints: (
+  "sm": 576px,
+  "md": 768px,
+  "lg": 992px,
+  "xl": 1200px,
+  "xxl" : 1600px,
+  "3xl" : 2200px);
+
+$displays: (none, block, inline, flex);
+
+.grid{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: inherit;
+  align-items: flex-start;
+  width: 100% !important;
+  padding: 0rem;
+}
+
+[class*='col-xxl-'],[class*='col-xl-'],[class*='col-lg-'], [class*='col-md-'], [class*='col-sm-'], [class*='col-'] {
+  margin: 0 0.5% 10px 0.5%;
+}
+
+.no-gutters {
+  [class*='col-xxl-'],[class*='col-xl-'],[class*='col-lg-'], [class*='col-md-'], [class*='col-sm-'], [class*='col-'] {
+    margin: 0 0 10px 0;
+  }
+}
+
+.relaxed-gutters {
+  [class*='col-xxl-'], [class*='col-lg-'], [class*='col-md-'], [class*='col-sm-'], [class*='col-'] {
+    margin: 0 1% 10px 1%;
+  }
+}
+
+.masonry-column{
+  position: relative;
+  margin-bottom: 0 !important;
+  .masonry-item{
+    position: absolute;
+    width: 100%;
+    height: auto;
+  }
+}
+
+@each $display-value in $displays{
+  .d-#{$display-value}{
+    display: $display-value;
+  }
+}
+
+@for $i from 1 through 12 {
+  .col-#{$i}{
+    flex-basis: math.div(100% , math.div(12 , $i)) - 1%;
+    max-width: math.div(100% , math.div(12 , $i)) - 1%;
+  }
+
+  .no-gutters{
+    .col-#{$i}{
+      flex-basis: math.div(100% ,  math.div(12 , $i)) - 0%;
+      max-width: math.div(100% ,  math.div(12 , $i)) - 0%;
+    }
+  }
+
+  .relaxed-gutters{
+    .col-#{$i}{
+      flex-basis: math.div(100% ,  math.div(12 , $i)) - 2%;
+      max-width: math.div(100% ,  math.div(12 , $i)) - 0%;
+    }
+  }
+}
+
+@mixin viewport-columns($screen-type: col-xxl, $gutter: 1%) {
+  @for $i from 1 through 12 {
+    .col-#{$screen-type}-#{$i}{
+      flex-basis: math.div(100% , math.div(12 , $i)) - $gutter;
+      max-width:  math.div(100% , math.div(12 , $i)) - $gutter;
+    }
+  }
+}
+
+@mixin display-types($screen-type: xxl){
+  @each $display-value in $displays{
+    .d-#{$screen-type}-#{$display-value}{
+      display: $display-value;
+    }
+  }
+  
+}
+
+@each $name, $size in $breakpoints {
+  @media (min-width: $size) {
+    @include display-types($screen-type: $name);
+
+    @include viewport-columns($screen-type: $name, $gutter: 1%);
+
+    .no-gutters{
+      @include viewport-columns($screen-type: $name, $gutter: 0%);      
+    }
+
+    .relaxed-gutters{
+      @include viewport-columns($screen-type: $name, $gutter: 2%);
+    }
+  }
+}
