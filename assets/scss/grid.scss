@@ -52,6 +52,7 @@ $displays: (none, block, inline, flex);
 }
 
 @for $i from 1 through 12 {
+
   .col-#{$i}{
     flex-basis: math.div(100% , math.div(12 , $i)) - 1%;
     max-width: math.div(100% , math.div(12 , $i)) - 1%;
@@ -70,6 +71,7 @@ $displays: (none, block, inline, flex);
       max-width: math.div(100% ,  math.div(12 , $i)) - 0%;
     }
   }
+  
 }
 
 @mixin viewport-columns($screen-type: col-xxl, $gutter: 1%) {
