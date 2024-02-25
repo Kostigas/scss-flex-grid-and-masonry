@@ -12,13 +12,13 @@ example
 ```
 ### Columns
 The Columns can have 7 breakpoints
-- .col- ( default )
-- .col-sm ( greater than 576px )
-- .col-md ( greater than 768px )
-- .col-lg ( greater than 992px )
-- .col-xl ( greater than 1200px )
-- .col-xxl ( greater than 1600px )
-- .col-3xl ( greater than 2200px )
+- `.col-` ( default )
+- `.col-sm` ( greater than 576px )
+- `.col-md` ( greater than 768px )
+- `.col-lg` ( greater than 992px )
+- `.col-xl` ( greater than 1200px )
+- `.col-xxl` ( greater than 1600px )
+- `.col-3xl` ( greater than 2200px )
 
 And 12 sizes. With conjuction with the above sizes with can create something like:
 ```html
