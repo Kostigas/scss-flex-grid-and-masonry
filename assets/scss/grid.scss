@@ -8,7 +8,24 @@ $breakpoints: (
   "xxl" : 1600px,
   "3xl" : 2200px);
 
-$displays: (none, block, inline, flex);
+$displays: (none, block, inline, inline-block, flex);
+
+$margin-spacings: (
+  "auto": auto,
+  "0": 0rem,
+  "1": 1rem,
+  "2": 2rem,
+  "3": 3rem,
+  "4": 4rem,
+  "5": 5rem);
+
+$padding-spacings: (
+  "0": 0rem,
+  "1": 1rem,
+  "2": 2rem,
+  "3": 3rem,
+  "4": 4rem,
+  "5": 5rem);
 
 .grid{
   display: flex;
@@ -51,6 +68,37 @@ $displays: (none, block, inline, flex);
   }
 }
 
+@each $spacing-name, $spacing-value in $margin-spacings{
+  //Margins
+  .mt-#{$spacing-name}{
+    margin-top: $spacing-value;
+  }
+  .mr-#{$spacing-name}{
+    margin-right: $spacing-value;
+  }
+  .mb-#{$spacing-name}{
+    margin-bottom: $spacing-value;
+  }
+  .ml-#{$spacing-name}{
+    margin-left: $spacing-value;
+  }
+}
+
+@each $spacing-name, $spacing-value in $padding-spacings{
+//Paddings
+  .pt-#{$spacing-name}{
+    padding-top: $spacing-value;
+  }
+  .pr-#{$spacing-name}{
+    padding-right: $spacing-value;
+  }
+  .pb-#{$spacing-name}{
+    padding-bottom: $spacing-value;
+  }
+  .pl-#{$spacing-name}{
+    padding-left: $spacing-value;
+  }
+}
 @for $i from 1 through 12 {
 
   .col-#{$i}{
@@ -89,12 +137,46 @@ $displays: (none, block, inline, flex);
       display: $display-value;
     }
   }
-  
+}
+
+@mixin spacing-types($screen-type: xxl){
+  @each $spacing-name, $spacing-value in $margin-spacings{
+    //Margins
+    .mt-#{$screen-type}-#{$spacing-name}{
+      margin-top: $spacing-value;
+    }
+    .mr-#{$screen-type}-#{$spacing-name}{
+      margin-right: $spacing-value;
+    }
+    .mb-#{$screen-type}-#{$spacing-name}{
+      margin-bottom: $spacing-value;
+    }
+    .ml-#{$screen-type}-#{$spacing-name}{
+      margin-left: $spacing-value;
+    }
+  }
+  @each $spacing-name, $spacing-value in $margin-spacings{
+    //Paddings
+    .pt-#{$screen-type}-#{$spacing-name}{
+      padding-top: $spacing-value;
+    }
+    .pr-#{$screen-type}-#{$spacing-name}{
+      padding-right: $spacing-value;
+    }
+    .pb-#{$screen-type}-#{$spacing-name}{
+      padding-bottom: $spacing-value;
+    }
+    .pl-#{$screen-type}-#{$spacing-name}{
+      padding-left: $spacing-value;
+    }
+  }
 }
 
 @each $name, $size in $breakpoints {
   @media (min-width: $size) {
     @include display-types($screen-type: $name);
+
+    @include spacing-types($screen-type: $name);
 
     @include viewport-columns($screen-type: $name, $gutter: 1%);
 
